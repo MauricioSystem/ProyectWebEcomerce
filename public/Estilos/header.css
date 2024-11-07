@@ -1,0 +1,81 @@
+/* Estilos para el Header */
+header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #363636;
+    padding: 20px 0;
+    position: relative;
+}
+
+header h1 {
+    font-size: 2.5rem;
+    color: #ffffff;
+    margin-bottom: 20px; /* Espacio entre el título y los botones */
+    transition: color 0.3s ease;
+}
+
+/* Contenedor de los botones (Catálogo, Login y Carrito) */
+.boton-contenedor {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%; /* Ocupa todo el ancho disponible */
+    max-width: 1200px; /* Ancho máximo del contenedor */
+    padding: 10px;
+}
+
+/* Botón de Catálogo (a la izquierda) */
+.boton-catalogo {
+    background-color: transparent;
+    color: #ffffff;
+    font-size: 1.5rem;
+    cursor: pointer;
+    border: none;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.boton-catalogo:hover {
+    color: #1b54ff;
+    transform: scale(1.1);
+}
+
+/* Login y Carrito (alineados a la derecha) */
+.login-carrito {
+    display: flex;
+    justify-content: flex-end;
+    gap: 20px; /* Espacio entre Login y Carrito */
+}
+
+.boton-login {
+    background-color: transparent;
+    color: #ffffff;
+    font-size: 1.5rem;
+    cursor: pointer;
+    border: none;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.boton-login:hover {
+    color: #1b54ff;
+    transform: scale(1.1);
+}
+
+.carrito-boton {
+    background-color: transparent;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.carrito-boton i {
+    color: #ffffff;
+}
+
+.carrito-boton:hover i {
+    color: #1b54ff;
+    transform: scale(1.1);
+}
+

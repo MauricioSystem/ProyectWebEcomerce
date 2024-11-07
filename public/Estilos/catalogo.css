@@ -1,0 +1,63 @@
+.contenedor-vehiculos {
+    display: flex;
+    flex-wrap: wrap; /* Permite que los elementos se ajusten en varias filas */
+    justify-content: space-between; /* Distribuir espacios entre vehículos */
+}
+
+.vehiculo-bloque {
+    flex: 1 0 calc(23% - 10px); /* Cada vehículo ocupa aproximadamente un cuarto del contenedor */
+    margin: 10px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.imagen-vehiculo {
+    width: 100%;
+    height: auto;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+.vehiculo-info {
+    text-align: left;
+}
+
+.modelo {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.marca, .precio, .anio, .descripcion {
+    font-size: 1rem;
+    color: #555;
+}
+
+.precio {
+    font-size: 1.2rem;
+    color: #007e1d;
+    margin-bottom: 10px;
+}
+
+
+
+.cerrar-panel {
+    cursor: pointer;
+    color: red;
+}
+
+/* Adaptación para pantallas pequeñas */
+@media (max-width: 768px) {
+    .vehiculo-bloque {
+        flex: 0 1 calc(48% - 10px); /* En pantallas pequeñas, mostrar 2 vehículos por fila */
+    }
+}
+
+@media (max-width: 480px) {
+    .vehiculo-bloque {
+        flex: 0 1 calc(100% - 12px); /* En pantallas muy pequeñas, mostrar 1 vehículo por fila */
+    }
+}

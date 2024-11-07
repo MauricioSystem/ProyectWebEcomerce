@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <!-- Enlazar los archivos CSS -->
+    <link rel="stylesheet" href="/public/Estilos/footer.css">
+    <link rel="stylesheet" href="/public/Estilos/header.css">
+    <link rel="stylesheet" href="/public/Estilos/styles_global.css">
+    <link rel="stylesheet" href="/public/Estilos/vehiculos.css">
+    <link rel="stylesheet" href="/public/Estilos/Responsive.css">
+    <link rel="stylesheet" href="/public/Estilos/normalize.css">
+    <link rel="stylesheet" href="/public/Estilos/modalCatalogo.css">
+    <link rel="stylesheet" href="/public/Estilos/catalogo.css">
+</head>
+<body>
+    <header>
+        <h1>Catálogo</h1>
+
+        <!-- Menú para autos y motos -->
+        <div class="catalogo-filtros">
+            <div class="boton-catalogo" id="boton-auto">Auto</div>
+            <ul id="marcas-autos" class="menu-marcas oculto">
+                <li data-id="1">Ferrari</li>
+                <li data-id="2">Lamborghini</li>
+                <li data-id="3">McLaren</li>
+            </ul>
+            
+            <div class="boton-catalogo" id="boton-moto">Moto</div>
+            <ul id="marcas-motos" class="menu-marcas oculto">
+                <li data-id="4">BMW</li>
+                <li data-id="5">Ducati</li>
+                <li data-id="6">Kawasaki</li>
+            </ul>
+        </div>
+
+        <nav class="login-carrito">
+            <button class="boton-login">Login</button>
+            <button class="carrito-boton">
+                <i class="fas fa-shopping-cart"></i>
+            </button>
+        </nav>
+    </header>
+
+    <main>
+        <div id="contenedor-vehiculos" class="contenedor-vehiculos">
+        </div>
+
+        
+           
+           <div class="panel-detalle-overlay"></div>
+           <div id="panel-detalle" class="panel-detalle">
+               <div class="panel-contenido">
+                   <button class="cerrar-panel">✖</button>
+                   <img id="imagen-detalle" class="imagen-detalle" src="" alt="Detalle del Vehículo">
+                   <p id="marca-detalle"></p>
+                   <p id="descripcion-detalle"></p>
+                   <p id="precio-detalle"></p>
+                   <button id="agregar-carrito" class="boton-detalle">Agregar al Carrito</button>
+               </div>
+           </div>
+           
+            
+    </main>
+
+    <footer>
+        <p>© 2024 Venta de Autos y Motos. Página con derechos de Autor.</p>
+        
+        <div class="footer-social-icons">
+            <a href="https://wa.me/qr/7VEYICXQUYXLK1" target="_blank" class="social-icon">
+                <i class="fab fa-whatsapp"></i>
+            </a>
+            <a href="https://www.facebook.com/mauricio.pazcabrera/" target="_blank" class="social-icon">
+                <i class="fab fa-facebook"></i>
+            </a>
+            <a href="https://www.instagram.com/mauriciopazcabrera/" target="_blank" class="social-icon">
+                <i class="fab fa-instagram"></i>
+            </a>
+        </div>
+    </footer>
+
+    <!-- Enlazar los scripts -->
+    <script src="Scripts/scripts.js"></script>
+    <script src="Scripts/catalogoApi.js"></script>
+    <script src="Scripts/modalCatalogo.js"></script>
+    <script src="Scripts/listaVehiculos.js"></script>
+</body>
+</html>

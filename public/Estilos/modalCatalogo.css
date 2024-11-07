@@ -1,0 +1,69 @@
+/* Superposición oscura cuando el modal está abierto */
+.panel-detalle-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.9); /* Fondo más oscuro */
+    opacity: 0;
+    visibility: hidden;
+    z-index: 999;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    pointer-events: none; /* Evita la interacción cuando está oculto */
+}
+
+/* Mostrar el overlay cuando el modal esté visible */
+.panel-detalle-overlay.visible {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto; /* Permite la interacción solo cuando está visible */
+}
+
+/* Panel Modal de Detalle */
+#panel-detalle {
+    position: fixed;
+    top: 50%;
+    left: 100%; /* Inicia fuera de la pantalla */
+    transform: translateY(-50%) translateX(0);
+    background-color: white;
+    padding: 20px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    width: 80%;
+    max-width: 500px;
+    opacity: 0;
+    visibility: hidden;
+    transition: transform 0.5s ease, opacity 0.5s ease, visibility 0.5s ease;
+}
+
+/* Mostrar el panel con desplazamiento desde la derecha */
+#panel-detalle.visible {
+    left: 50%; /* Mover al centro de la pantalla */
+    transform: translate(-50%, -50%); /* Centrado en pantalla */
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Contenido dentro del panel */
+.panel-contenido {
+    position: relative;
+    text-align: center;
+}
+
+.cerrar-panel {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background: transparent;
+    border: none;
+    font-size: 1.5rem;
+    color: #333;
+    cursor: pointer;
+}
+
+.imagen-detalle {
+    max-width: 100%;
+    margin-bottom: 15px;
+    border-radius: 8px;
+}
