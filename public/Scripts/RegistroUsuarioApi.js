@@ -26,7 +26,7 @@ document.getElementById("formRegistro").addEventListener("submit", async (e) => 
     await registrarUsuario(nombre, email, password, rol);
 });
 
-// Lógica para iniciar sesión
+
 async function iniciarSesion(email, password) {
     try {
         const response = await axios.post('http://localhost:3000/api/usuarios/login', {
@@ -34,10 +34,23 @@ async function iniciarSesion(email, password) {
             password
         });
 
-        // Si el inicio de sesión es exitoso, redirigir al index.html
         if (response.status === 200) {
             alert(response.data.message);
-            window.location.href = 'http://127.0.0.1:3001/public/index.html';
+
+            const { sessionId, nombre, rol, id } = response.data.user;
+
+            // Guardar datos del usuario en localStorage
+            localStorage.setItem('sessionId', sessionId);
+            localStorage.setItem('nombreUsuario', nombre);
+            localStorage.setItem('usuarioId', id);
+            localStorage.setItem('rolUsuario', rol); // Guardar el rol del usuario
+
+            // Redirigir según el rol del usuario
+            if (rol === 'admin') {
+                window.location.href = "/public/vistaAdministrador.html";
+            } else {
+                window.location.href = "/public/index.html";
+            }
         }
     } catch (error) {
         console.error('Error al iniciar sesión:', error);
@@ -46,7 +59,8 @@ async function iniciarSesion(email, password) {
     }
 }
 
-// Conectar el formulario de inicio de sesión con la función iniciarSesion
+ 
+
 document.getElementById("formLogin").addEventListener("submit", async (e) => {
     e.preventDefault();
     const email = document.getElementById("login-email").value;

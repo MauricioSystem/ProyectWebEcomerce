@@ -1,7 +1,7 @@
 .contenedor-vehiculos {
     display: flex;
-    flex-wrap: wrap; /* Permite que los elementos se ajusten en varias filas */
-    justify-content: space-between; /* Distribuir espacios entre vehículos */
+    flex-wrap: wrap; 
+    justify-content: space-between; 
 }
 
 .vehiculo-bloque {

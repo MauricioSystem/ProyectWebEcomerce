@@ -6,7 +6,7 @@
     <title>Catálogo</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
-    <!-- Enlazar los archivos CSS -->
+   
     <link rel="stylesheet" href="/public/Estilos/footer.css">
     <link rel="stylesheet" href="/public/Estilos/header.css">
     <link rel="stylesheet" href="/public/Estilos/styles_global.css">
@@ -20,29 +20,33 @@
     <header>
         <h1>Catálogo</h1>
 
-        <!-- Menú para autos y motos -->
         <div class="catalogo-filtros">
             <div class="boton-catalogo" id="boton-auto">Auto</div>
             <ul id="marcas-autos" class="menu-marcas oculto">
-                <li data-id="1">Ferrari</li>
-                <li data-id="2">Lamborghini</li>
-                <li data-id="3">McLaren</li>
+                <li data-id="3">Ferrari</li>
+                <li data-id="1">Lamborghini</li>
+                <li data-id="2">McLaren</li>
             </ul>
             
             <div class="boton-catalogo" id="boton-moto">Moto</div>
             <ul id="marcas-motos" class="menu-marcas oculto">
-                <li data-id="4">BMW</li>
-                <li data-id="5">Ducati</li>
-                <li data-id="6">Kawasaki</li>
+                <li data-id="6">BMW</li>
+                <li data-id="4">Ducati</li>
+                <li data-id="5">Kawasaki</li>
             </ul>
         </div>
 
-        <nav class="login-carrito">
-            <button class="boton-login">Login</button>
-            <button class="carrito-boton">
+
+        <div class="login-carrito">
+            <button class="boton-login" id="boton-login">Login</button>
+            <span id="nombre-usuario" style="display: none;"></span> 
+            <button class="carrito-boton" id="boton-carrito">
                 <i class="fas fa-shopping-cart"></i>
             </button>
-        </nav>
+            <button id="boton-logout" style="display: none;">Cerrar sesión</button>
+        </div>
+        
+        
     </header>
 
     <main>
@@ -87,5 +91,6 @@
     <script src="Scripts/catalogoApi.js"></script>
     <script src="Scripts/modalCatalogo.js"></script>
     <script src="Scripts/listaVehiculos.js"></script>
+    <script src="Scripts/anadirCarrito.js"></script> 
 </body>
 </html>

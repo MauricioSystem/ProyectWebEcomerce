@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Vehículo</title>
+    <link rel="stylesheet" href="/public/Estilos/crearVehiculo.css">
+</head>
+<body>
+    <header>
+        <h1>Crear Nuevo Vehículo</h1>
+        <button id="volver-admin" class="boton-volver">Volver al Panel Administrador</button>
+    </header>
+    
+    <main>
+        <form id="crearVehiculoForm" enctype="multipart/form-data">
+            <label for="marca">Marca:</label>
+            <select id="marca" name="marca_id" required>
+                <option value="1">Lamborghini</option>
+                <option value="2">McLaren</option>
+                <option value="3">Ferrari</option>
+                <option value="4">Ducati</option>
+                <option value="5">Kawasaki</option>
+                <option value="6">BMW</option>
+            </select>
+
+            <label for="tipo">Tipo:</label>
+            <select id="tipo" name="tipo_id" required>
+                <option value="1">Auto</option>
+                <option value="2">Moto</option>
+            </select>
+
+            <label for="descripcion">Descripción:</label>
+            <textarea id="descripcion" name="descripcion" required></textarea>
+
+            <label for="precio">Precio (Bs.):</label>
+            <input type="number" id="precio" name="precio" required>
+
+            <label for="imagen">Imagen del Vehículo:</label>
+            <input type="file" id="imagen" name="imagen" accept="image/*" required>
+
+            <button type="submit" class="boton-enviar">Crear Vehículo</button>
+        </form>
+    </main>
+
+    <footer>
+        <p>© 2024 M.MOTORS - Panel de Administración</p>
+    </footer>
+
+    <script src="/public/Scripts/CrearVehiculo.js"></script>
+</body>
+</html>

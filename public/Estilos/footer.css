@@ -1,20 +1,18 @@
-
 footer {
-    background-color: #1e1e1e;
+    background-color: #2c2c2c; /* Un gris suave */
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 30px;
     position: relative;
+    border-top: 3px solid #00a859; /* Línea verde */
 }
-
 
 footer p {
     margin: 0 auto;
     font-size: 1rem;
-    color: rgb(133, 133, 133);
+    color: #979797; /* Color claro */
 }
-
 
 .footer-social-icons {
     display: flex;
@@ -33,16 +31,14 @@ footer p {
     transform: scale(1.1);
 }
 
-/* Estilos para los diferentes íconos */
 .footer-social-icons .fa-whatsapp {
-    color: #009f3a; /* Color verde de WhatsApp */
+    color: #00a859; /* Verde vibrante */
 }
 
 .footer-social-icons .fa-facebook {
-    color: #002d8e; /* Color azul de Facebook */
+    color: #1976d2; /* Azul moderno */
 }
 
 .footer-social-icons .fa-instagram {
-    color: #ff0000; /* Color rosado de Instagram */
+    color: #ff006e; /* Magenta */
 }
-

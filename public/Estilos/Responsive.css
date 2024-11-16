@@ -1,20 +1,25 @@
 /* Responsive Design */
 
+/* Para móviles: Máximo ancho de 767px */
 @media (max-width: 767px) {
     header h1 {
         font-size: 1.8rem;
+        margin-bottom: 10px;
+    }
+
+    header .boton-contenedor {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
     }
 
     .contenedor-principal {
         flex-direction: column;
         align-items: center;
+        padding: 10px;
     }
 
-    .dropdown {
-        width: 100%;
-        text-align: center;
-    }
-
+    .dropdown,
     .dropdown-content {
         width: 100%;
         text-align: center;
@@ -25,31 +30,54 @@
         padding: 10px;
     }
 
-    .vision, .mision {
+    .vision, 
+    .mision {
         flex-direction: column;
         align-items: center;
         text-align: center;
+        gap: 20px;
     }
 
-    .imagen-principal, .imagen-secundaria {
+    .imagen-principal, 
+    .imagen-secundaria {
         width: 100%;
         height: auto;
+        border-radius: 10px;
     }
 
     .vehiculo {
-        width: 100%;
+        width: 90%;
+        margin: 10px auto;
+        padding: 10px;
+    }
+
+    .boton-login,
+    .carrito-boton {
+        font-size: 1.2rem;
+    }
+
+    footer {
+        padding: 10px;
+        text-align: center;
     }
 }
 
-
+/* Para tabletas: Ancho entre 768px y 1024px */
 @media (min-width: 768px) and (max-width: 1024px) {
     header h1 {
         font-size: 2.2rem;
     }
 
+    header .boton-contenedor {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+
     .contenedor-principal {
         flex-direction: row;
         justify-content: space-between;
+        gap: 20px;
     }
 
     .vision-mision {
@@ -57,62 +85,93 @@
         gap: 30px;
     }
 
-    .vision, .mision {
+    .vision,
+    .mision {
         flex-direction: row;
         justify-content: space-between;
         text-align: left;
+        gap: 20px;
     }
 
-    .vision .texto, .mision .texto {
+    .vision .texto, 
+    .mision .texto {
         text-align: left;
         padding-left: 20px;
     }
 
     .imagen-principal {
-        max-width: 1200px;
+        max-width: 100%;
+        border-radius: 10px;
     }
 
     .imagen-secundaria {
         max-width: 500px;
+        height: auto;
+        border-radius: 10px;
     }
 
     .vehiculo {
-        width: 45%; 
+        width: 45%;
+        margin: 10px;
+        padding: 15px;
+    }
+
+    footer {
+        text-align: center;
+        padding: 20px;
     }
 }
 
-
+/* Para pantallas grandes: Mínimo ancho de 1025px */
 @media (min-width: 1025px) {
     header h1 {
         font-size: 2.5rem;
     }
 
+    header .boton-contenedor {
+        justify-content: space-between;
+        padding: 0 20px;
+    }
+
     .contenedor-principal {
         justify-content: space-between;
         padding: 20px 0;
+        gap: 40px;
     }
 
     .vision-mision {
         flex-direction: column;
         padding: 40px;
+        gap: 30px;
     }
 
-    .vision, .mision {
+    .vision,
+    .mision {
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
+        gap: 30px;
     }
 
     .imagen-principal {
         max-width: 1400px;
         margin: 26px auto;
+        border-radius: 10px;
     }
 
     .imagen-secundaria {
         max-width: 700px;
+        border-radius: 10px;
     }
 
     .vehiculo {
         width: 300px;
+        margin: 20px;
+        padding: 20px;
+    }
+
+    footer {
+        padding: 30px;
+        text-align: center;
     }
 }

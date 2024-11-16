@@ -1,3 +1,5 @@
+// CatalogoApi.js
+
 async function obtenerVehiculos() { 
     try {
         const response = await fetch('http://localhost:3000/api/vehiculos', { mode: 'cors' });
@@ -16,6 +18,8 @@ function mostrarVehiculos(vehiculos) {
         const vehiculoBloque = document.createElement('div');
         vehiculoBloque.className = 'vehiculo-bloque';
 
+        // Asignar todos los atributos de datos incluyendo el ID
+        vehiculoBloque.dataset.id = vehiculo.id;
         vehiculoBloque.dataset.imagen = vehiculo.imagen;
         vehiculoBloque.dataset.marca = vehiculo.marca;
         vehiculoBloque.dataset.descripcion = vehiculo.descripcion;
@@ -30,15 +34,20 @@ function mostrarVehiculos(vehiculos) {
 
         // Evento para abrir el modal
         vehiculoBloque.addEventListener('click', () => {
-            abrirModal(vehiculo);
+            abrirModal({
+                id: vehiculo.id,
+                imagen: vehiculo.imagen,
+                marca: vehiculo.marca,
+                descripcion: vehiculo.descripcion,
+                precio: vehiculo.precio
+            });
         });
 
         contenedor.appendChild(vehiculoBloque);
     });
 }
-
+3000
 document.addEventListener('DOMContentLoaded', obtenerVehiculos);
-
 
 async function obtenerVehiculosPorMarca(marcaId) {
     try {
@@ -56,4 +65,3 @@ document.querySelectorAll('#marcas-autos li, #marcas-motos li').forEach((item) =
         obtenerVehiculosPorMarca(marcaId); 
     });
 });
-

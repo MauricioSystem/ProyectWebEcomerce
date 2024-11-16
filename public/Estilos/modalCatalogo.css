@@ -1,55 +1,59 @@
-/* Superposición oscura cuando el modal está abierto */
 .panel-detalle-overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
-    background: rgba(0, 0, 0, 0.9); /* Fondo más oscuro */
+    background: rgba(0, 0, 0, 0.667); 
     opacity: 0;
     visibility: hidden;
     z-index: 999;
-    transition: opacity 0.3s ease, visibility 0.3s ease;
-    pointer-events: none; /* Evita la interacción cuando está oculto */
+    transition: opacity 0.4s ease, visibility 0.4s ease; 
+    pointer-events: none; /*no interacion*/
 }
 
-/* Mostrar el overlay cuando el modal esté visible */
+
 .panel-detalle-overlay.visible {
     opacity: 1;
     visibility: visible;
-    pointer-events: auto; /* Permite la interacción solo cuando está visible */
+    pointer-events: auto; 
 }
 
-/* Panel Modal de Detalle */
+
 #panel-detalle {
     position: fixed;
     top: 50%;
-    left: 100%; /* Inicia fuera de la pantalla */
+    left: 100%; 
     transform: translateY(-50%) translateX(0);
     background-color: white;
     padding: 20px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.689);
     z-index: 1000;
     width: 80%;
     max-width: 500px;
     opacity: 0;
     visibility: hidden;
-    transition: transform 0.5s ease, opacity 0.5s ease, visibility 0.5s ease;
+    transition: transform 0.7s ease, opacity 0.7s ease, visibility 0.6s ease; 
+    border-radius: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.166); 
+    box-shadow: 0 0 15px 5px rgba(0, 255, 0, 0.362); 
 }
 
-/* Mostrar el panel con desplazamiento desde la derecha */
 #panel-detalle.visible {
-    left: 50%; /* Mover al centro de la pantalla */
-    transform: translate(-50%, -50%); /* Centrado en pantalla */
+    left: 50%; 
+    transform: translate(-50%, -50%); 
     opacity: 1;
     visibility: visible;
+    border: 1px solid rgba(0, 255, 0, 0.559); 
+    box-shadow: 0 0 20px 10px rgba(0, 255, 0, 0.404); 
 }
 
-/* Contenido dentro del panel */
+
 .panel-contenido {
     position: relative;
     text-align: center;
 }
+
 
 .cerrar-panel {
     position: absolute;
@@ -60,10 +64,23 @@
     font-size: 1.5rem;
     color: #333;
     cursor: pointer;
+    transition: color 0.3s ease, transform 0.3s ease;
 }
+
+.cerrar-panel:hover {
+    color: #ff0000; 
+    transform: scale(1.2); 
+}
+
 
 .imagen-detalle {
     max-width: 100%;
     margin-bottom: 15px;
     border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.67); 
+    transition: box-shadow 0.4s ease;
+}
+
+.imagen-detalle:hover {
+    box-shadow: 0 0 15px rgba(55, 255, 0, 0.751); 
 }

@@ -5,20 +5,13 @@ const carritoController = require('../controllers/carrito.controller');
 module.exports = (client) => {
     carritoController.setClient(client);
 
-    // Ruta para crear un carrito 
-    router.post('/carrito/crear', carritoController.createAnonymousCarrito);
+    router.post('/crear', carritoController.createAnonymousCarrito);   // Ruta para crear carrito anónimo
+    router.post('/anadir', carritoController.addToCarrito);       // Añadir al carrito
+    router.get('/:sessionId', carritoController.getCarritoBySession);  // Obtener el carrito
+    router.put('/editar/:vehiculoId', carritoController.updateCarrito);  // Actualizar cantidad
+    router.delete('/eliminar/:vehiculoId', carritoController.removeFromCarrito);  // Eliminar del carrito
 
-    // Ruta para asociar un carrito a un usuario al iniciar sesión
-    router.put('/carrito/asociar/:usuarioId', carritoController.associateCarritoToUser);
 
-    // Ruta para añadir 
-    router.post('/carrito/anadir', carritoController.addToCarrito);
-
-    // Ruta para eliminar 
-    router.delete('/carrito/eliminar/:vehiculoId', carritoController.removeFromCarrito);
-
-    // Ruta para editar la cantidad de un producto en el carrito
-    router.put('/carrito/editar/:vehiculoId', carritoController.updateCarrito);
 
     return router;
 };
