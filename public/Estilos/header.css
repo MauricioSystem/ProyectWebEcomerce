@@ -3,7 +3,7 @@ header {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: #2a2a2a; 
+    background-color: #0e0e0e; 
     padding: 20px 10px;
     position: relative;
     width: 100%;
@@ -19,7 +19,6 @@ header h1 {
     transition: color 0.3s ease;
 }
 
-
 nav.boton-contenedor {
     display: flex;
     justify-content: space-between;
@@ -29,7 +28,7 @@ nav.boton-contenedor {
     padding: 10px 20px;
 }
 
-
+/* Botón Catálogo */
 .boton-catalogo {
     background-color: transparent;
     color: #ffffff;
@@ -37,7 +36,6 @@ nav.boton-contenedor {
     cursor: pointer;
     border: 2px solid #ffffff;
     padding: 10px 15px;
-    border-radius: 5px;
     transition: all 0.3s ease;
 }
 
@@ -55,7 +53,6 @@ nav.boton-contenedor {
     gap: 20px;
 }
 
-
 #nombre-usuario {
     color: #00ff00; 
     font-size: 1.2rem;
@@ -63,8 +60,7 @@ nav.boton-contenedor {
     font-style: italic;
     border: 2px solid #00ff00;
     padding: 5px 10px;
-    border-radius: 5px;
-    background-color: #2a2a2a; 
+    background-color: #121212; 
     display: inline-block;
     transition: background-color 0.3s ease, color 0.3s ease;
 }
@@ -83,7 +79,7 @@ nav.boton-contenedor {
     cursor: pointer;
     border: 2px solid #ffffff;
     padding: 8px 15px;
-    border-radius: 5px;
+    border-radius: 2px;
     transition: all 0.3s ease;
 }
 

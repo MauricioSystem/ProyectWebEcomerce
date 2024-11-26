@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const nombreAdmin = document.getElementById('nombre-admin');
     const cerrarSesionBtn = document.getElementById('cerrar-sesion');
     const crearVehiculoBtn = document.getElementById('crear-vehiculo');
+    const verFacturasBtn = document.getElementById('ver-facturas'); // Botón para ver facturas
 
     // Mostrar el nombre del administrador dinámicamente
     const nombreUsuario = localStorage.getItem('nombreUsuario');
@@ -14,7 +15,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Manejo del botón de cerrar sesión
     cerrarSesionBtn.addEventListener('click', () => {
         localStorage.clear(); // Limpia la sesión
-        window.location.href = '/public/inicioSesion.html'; // Redirige al inicio de sesión
+        window.location.href = '/public/index.html'; // Redirige al inicio de sesión
     });
 
     // Cargar y mostrar los vehículos
@@ -97,10 +98,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         const guardarCambiosBtn = document.getElementById('guardarCambios');
 
         // Prellenar el formulario con los datos del vehículo
-        marcaField.value = vehiculo.marca_id;
-        tipoField.value = vehiculo.tipo_id;
-        descripcionField.value = vehiculo.descripcion;
-        precioField.value = vehiculo.precio;
+        marcaField.value = vehiculo.marca_id || '';
+        tipoField.value = vehiculo.tipo_id || '';
+        descripcionField.value = vehiculo.descripcion || '';
+        precioField.value = vehiculo.precio || '';
 
         // Mostrar el modal
         modal.style.display = 'flex';
@@ -146,6 +147,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         window.location.href = '/public/crearVehiculo.html';
     });
 
-    
+    // Ver facturas (Redirige a la vista de facturas)
+    verFacturasBtn.addEventListener('click', () => {
+        window.location.href = '/public/vistaFactura.html';
+    });
+
+
     cargarVehiculos();
 });

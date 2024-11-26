@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
     const nombreUsuario = localStorage.getItem('nombreUsuario') || 'Anónimo';
-    const usuarioId = localStorage.getItem('usuarioId'); // ID del usuario logueado
+    const usuarioId = localStorage.getItem('usuarioId'); 
     const nombreUsuarioElemento = document.getElementById('nombre-usuario');
     if (nombreUsuarioElemento) {
         nombreUsuarioElemento.textContent = nombreUsuario;
@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function mostrarCarrito(carritoItems) {
-        carritoContenido.innerHTML = ""; // Limpiar contenido
+        carritoContenido.innerHTML = ""; 
         let total = 0;
 
         if (!Array.isArray(carritoItems)) {
@@ -52,12 +52,12 @@ document.addEventListener('DOMContentLoaded', function () {
                 </div>
                 <div>
                     <p>Cantidad:
-                        <button class="boton-cantidad" onclick="actualizarCantidad('${item.vehiculo_id}', ${item.cantidad - 1})">-</button>
+                        <button class="boton-cantidad" onclick="window.actualizarCantidad('${item.vehiculo_id}', ${item.cantidad - 1})">-</button>
                         ${item.cantidad}
-                        <button class="boton-cantidad" onclick="actualizarCantidad('${item.vehiculo_id}', ${item.cantidad + 1})">+</button>
+                        <button class="boton-cantidad" onclick="window.actualizarCantidad('${item.vehiculo_id}', ${item.cantidad + 1})">+</button>
                     </p>
                     <p>Subtotal: ${subtotal} Bs.</p>
-                    <button class="boton-eliminar" onclick="eliminarProducto('${item.vehiculo_id}')">Eliminar</button>
+                    <button class="boton-eliminar" onclick="window.eliminarProducto('${item.vehiculo_id}')">Eliminar</button>
                 </div>
             `;
             carritoContenido.appendChild(itemElement);
@@ -75,7 +75,7 @@ document.addEventListener('DOMContentLoaded', function () {
         carritoContenido.appendChild(comprarButton);
     }
 
-    async function actualizarCantidad(vehiculoId, nuevaCantidad) {
+    window.actualizarCantidad = async function actualizarCantidad(vehiculoId, nuevaCantidad) {
         if (nuevaCantidad < 1) {
             eliminarProducto(vehiculoId);
             return;
@@ -93,9 +93,9 @@ document.addEventListener('DOMContentLoaded', function () {
         } catch (error) {
             console.error("Error al actualizar el carrito:", error);
         }
-    }
+    };
 
-    async function eliminarProducto(vehiculoId) {
+    window.eliminarProducto = async function eliminarProducto(vehiculoId) {
         try {
             const response = await fetch(`http://localhost:3000/api/carrito/eliminar/${vehiculoId}`, {
                 method: "DELETE",
@@ -110,9 +110,8 @@ document.addEventListener('DOMContentLoaded', function () {
         } catch (error) {
             console.error("Error al eliminar el producto:", error);
         }
-    }
+    };
 
-    // Comprar carrito
     async function comprarCarrito() {
         if (!usuarioId || !sessionId) {
             alert("Por favor, inicia sesión para realizar la compra.");
@@ -132,12 +131,65 @@ document.addEventListener('DOMContentLoaded', function () {
 
             const data = await response.json();
             alert(`Compra realizada exitosamente. Factura ID: ${data.facturaId}`);
-            cargarCarrito(); // Refrescar carrito (estará vacío tras la compra)
+            cargarCarrito(); 
         } catch (error) {
             console.error("Error al realizar la compra:", error);
             alert("Error al realizar la compra. Intenta nuevamente.");
         }
     }
 
+
+
+    async function cargarUltimasCompras() {
+        const usuarioId = localStorage.getItem('usuarioId'); // Obtén el usuario ID del localStorage
+    
+        if (!usuarioId) {
+            console.error('Error: Usuario no autenticado.');
+            alert('Por favor, inicia sesión para ver tus últimas compras.');
+            return;
+        }
+    
+        try {
+            const response = await fetch(`http://localhost:3000/api/detalles_factura/usuario/${usuarioId}`);
+            if (!response.ok) throw new Error('Error al obtener las últimas compras.');
+    
+            const compras = await response.json();
+            mostrarUltimasCompras(compras);
+        } catch (error) {
+            console.error('Error al cargar las últimas compras:', error);
+        }
+    }
+    
+
+    function mostrarUltimasCompras(compras) {
+        const sidebar = document.getElementById('ultimas-compras');
+        if (!sidebar) {
+            console.error('Error: No se encontró el contenedor de últimas compras.');
+            return;
+        }
+    
+        sidebar.innerHTML = ''; // Limpia el contenido anterior
+    
+        if (compras.length === 0) {
+            sidebar.innerHTML = '<p>No hay compras recientes.</p>';
+            return;
+        }
+    
+        compras.forEach((compra) => {
+            const compraItem = document.createElement('div');
+            compraItem.classList.add('compra-item');
+            compraItem.innerHTML = `
+                <p><strong>Factura ID:</strong> ${compra.factura_id}</p>
+                <p><strong>Vehículo:</strong> ${compra.vehiculo}</p>
+                <p><strong>Cantidad:</strong> ${compra.cantidad}</p>
+                <p><strong>Subtotal:</strong> ${compra.subtotal} Bs.</p>
+                <hr>
+            `;
+            sidebar.appendChild(compraItem);
+        });
+    }
+    
+
     cargarCarrito();
+    cargarUltimasCompras();
 });

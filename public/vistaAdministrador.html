@@ -6,6 +6,7 @@
     <title>Panel Administrador</title>
     <link rel="stylesheet" href="/public/Estilos/administrador.css">
     <link rel="stylesheet" href="/public/Estilos/ModalAdmin.css">
+
 </head>
 <body>
     <header>
@@ -22,9 +23,13 @@
             <div id="vehiculos-contenedor"></div>
             <button id="crear-vehiculo">Crear Vehículo</button>
         </section>
+        <section class="gestion-facturas">
+            <h2>Gestión de Facturas</h2>
+            <button id="ver-facturas">Ver Facturas</button>
+        </section>
     </main>
 
-    <!-- Modal para editar vehículos -->
+
     <div id="adminModal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
@@ -61,7 +66,8 @@
         <p>© 2024 M.MOTORS - Panel de Administración</p>
     </footer>
 
-    <script src="/public/Scripts/EditAdmin.js"></script>
+
     <script src="/public/Scripts/administrado.js"></script>
+
 </body>
 </html>

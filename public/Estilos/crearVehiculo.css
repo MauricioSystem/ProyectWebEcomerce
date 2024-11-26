@@ -84,3 +84,54 @@ footer {
     background-color: #212529;
     color: #fff;
 }
+
+
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        padding: 10px;
+    }
+
+    .boton-volver {
+        margin-top: 10px;
+        width: 100%;
+        font-size: 0.9rem;
+    }
+
+    form {
+        padding: 15px;
+    }
+
+    form input, form select, form textarea {
+        font-size: 0.9rem;
+    }
+
+    form button {
+        font-size: 0.9rem;
+        padding: 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    .boton-volver {
+        font-size: 0.8rem;
+        padding: 8px 15px;
+    }
+
+    form {
+        padding: 10px;
+    }
+
+    form input, form select, form textarea {
+        font-size: 0.8rem;
+    }
+
+    form button {
+        font-size: 0.8rem;
+        padding: 7px;
+    }
+}

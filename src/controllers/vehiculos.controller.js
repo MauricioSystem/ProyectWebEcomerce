@@ -109,8 +109,8 @@ const updateVehiculo = async (req, res) => {
         const result = await client.query(query, [marca_id, tipo_id, descripcion, precio, imagen, id]);
         res.json(result.rows[0]);
     } catch (error) {
-        console.error('Error al actualizar vehículo:', error);
-        res.status(500).json({ error: 'Error al actualizar vehículo' });
+        console.error('funco:', error);
+        res.status(500).json({ error: 'funco' });
     }
 };
 

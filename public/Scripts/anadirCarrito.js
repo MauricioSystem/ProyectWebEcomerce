@@ -1,4 +1,4 @@
-// anadirCarrito.js
+
 document.addEventListener("DOMContentLoaded", async () => {
     const botonAgregarCarrito = document.getElementById("agregar-carrito");
 

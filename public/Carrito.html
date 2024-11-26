@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Carrito de Compras</title>
     <link rel="stylesheet" href="/public/Estilos/carrito.css">
+    <link rel="stylesheet" href="/public/Estilos/aside.css">
 </head>
 <body>
     <header>
@@ -12,9 +13,15 @@
         <button onclick="location.href='index.html'" class="boton-volver">Volver al Inicio</button>
     </header>
     <main>
-        <div id="carrito-contenido" class="carrito-contenido"></div>
-    
-
+        <div class="contenido-principal">
+            <div id="carrito-contenido" class="carrito-contenido"></div>
+            <aside class="sidebar">
+                <h2>Últimas Compras</h2>
+                <div id="ultimas-compras" class="ultimas-compras">
+                    <p>Cargando últimas compras...</p>
+                </div>
+            </aside>
+        </div>
     </main>
     <footer>
         <p>© 2024 M.MOTORS - Todos los derechos reservados.</p>

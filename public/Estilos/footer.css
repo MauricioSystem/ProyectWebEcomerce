@@ -1,17 +1,17 @@
 footer {
-    background-color: #2c2c2c; /* Un gris suave */
+    background-color: #0f0f0f;
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 30px;
     position: relative;
-    border-top: 3px solid #00a859; /* Línea verde */
+    border-top: 3px solid #00ff55; 
 }
 
 footer p {
     margin: 0 auto;
     font-size: 1rem;
-    color: #979797; /* Color claro */
+    color: #979797;
 }
 
 .footer-social-icons {

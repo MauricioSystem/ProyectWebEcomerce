@@ -1,7 +1,7 @@
 // Registrar un nuevo usuario usando la API
 async function registrarUsuario(nombre, email, password, rol) {
     try {
-        const response = await axios.post('http://localhost:3000/api/usuarios/register', {
+        const response = await axios.post("http://localhost:3000/api/usuarios/register", {
             nombre,
             email,
             password,
@@ -9,7 +9,7 @@ async function registrarUsuario(nombre, email, password, rol) {
         });
         alert(response.data.message);
     } catch (error) {
-        console.error('Error en el registro:', error);
+        console.error('Error en el registro', error);
         const errorMessage = error.response?.data?.message || 'Error en el registro';
         alert(errorMessage);
     }

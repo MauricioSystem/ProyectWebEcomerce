@@ -170,3 +170,57 @@ footer {
     font-size: 0.9rem;
     border-top: 1px solid #343a40;
 }
+
+
+/* Gestión de facturas */
+.gestion-facturas {
+    text-align: center;
+    margin-top: 30px;
+}
+
+#ver-facturas {
+    background-color: #007bff;
+    color: #ffffff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+#ver-facturas:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+    .gestion-vehiculos, 
+    .gestion-facturas {
+        padding: 15px;
+    }
+
+    #crear-vehiculo,
+    #ver-facturas {
+        font-size: 0.9rem;
+        padding: 8px 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    header h1 {
+        font-size: 1.5rem;
+    }
+
+    .gestion-vehiculos h2,
+    .gestion-facturas h2 {
+        font-size: 1.3rem;
+    }
+
+    #crear-vehiculo,
+    #ver-facturas {
+        font-size: 0.8rem;
+        padding: 6px 12px;
+    }
+}

@@ -1,0 +1,33 @@
+.sidebar {
+    flex: 1;
+    background-color: #3c3c3c;
+    padding: 1.5em;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    height: fit-content;
+}
+
+.sidebar h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1em;
+    color: #f2f2f2;
+}
+
+.ultimas-compras {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.ultimas-compras .compra-item {
+    background-color: #4a4a4a;
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.ultimas-compras .compra-item p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #ddd;
+}

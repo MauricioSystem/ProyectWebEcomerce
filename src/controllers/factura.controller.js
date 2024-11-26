@@ -12,7 +12,6 @@ const crearFactura = async (req, res) => {
     }
 
     try {
-        // Obtener los productos del carrito
         const carritoQuery = `
             SELECT cv.vehiculo_id, cv.cantidad, v.precio
             FROM carrito_vehiculos cv
@@ -27,10 +26,9 @@ const crearFactura = async (req, res) => {
             return res.status(400).json({ error: 'El carrito está vacío.' });
         }
 
-        // Calcular el total de la factura
         const total = carritoItems.reduce((sum, item) => sum + item.cantidad * item.precio, 0);
 
-        // Crear la factura
+
         const facturaQuery = `
             INSERT INTO facturas (usuario_id, total) 
             VALUES ($1, $2) RETURNING id
@@ -38,7 +36,6 @@ const crearFactura = async (req, res) => {
         const facturaResult = await client.query(facturaQuery, [usuarioId, total]);
         const facturaId = facturaResult.rows[0].id;
 
-        // Insertar los detalles de la factura
         const detallesQuery = `
             INSERT INTO detalles_factura (factura_id, vehiculo_id, cantidad, precio_unitario)
             VALUES ($1, $2, $3, $4)
@@ -52,7 +49,6 @@ const crearFactura = async (req, res) => {
             ]);
         }
 
-        // Vaciar el carrito
         const vaciarCarritoQuery = `
             DELETE FROM carrito_vehiculos
             WHERE carrito_id = (SELECT id FROM carrito WHERE session_id = $1)
@@ -65,6 +61,7 @@ const crearFactura = async (req, res) => {
         res.status(500).json({ error: 'Error al crear la factura.' });
     }
 };
+
 
 module.exports = {
     setClient,

@@ -1,6 +1,4 @@
-/* Responsive Design */
 
-/* Para móviles: Máximo ancho de 767px */
 @media (max-width: 767px) {
     header h1 {
         font-size: 1.8rem;
@@ -62,7 +60,6 @@
     }
 }
 
-/* Para tabletas: Ancho entre 768px y 1024px */
 @media (min-width: 768px) and (max-width: 1024px) {
     header h1 {
         font-size: 2.2rem;
@@ -122,7 +119,7 @@
     }
 }
 
-/* Para pantallas grandes: Mínimo ancho de 1025px */
+
 @media (min-width: 1025px) {
     header h1 {
         font-size: 2.5rem;

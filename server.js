@@ -10,6 +10,7 @@ const vehiculosRoutes = require('./src/routes/vehiculos.routes');
 const usuariosRoutes = require('./src/routes/usuarios.routes');
 const carritoRoutes = require('./src/routes/carrito.routes');
 const facturaRoutes = require('./src/routes/factura.routes');
+const detalleFacturaRoutes = require('./src/routes/detalleFactura.routes');
 
 const app = express();
 const PORT = 3000;
@@ -46,12 +47,13 @@ app.use('/api/usuarios', usuariosRoutes(client));
 app.use('/api/carrito', carritoRoutes(client));
 app.use('/api/factura', facturaRoutes(client));
 
+app.use('/api/detalles_factura', detalleFacturaRoutes(client));
+
 
 app.use((err, req, res, next) => {
     console.error('Error global:', err);
     res.status(500).json({ error: 'Ha ocurrido un error inesperado.' });
 });
-
 
 app.listen(PORT, () => {
     console.log(`Servidor iniciado en http://localhost:${PORT}`);
