@@ -1,11 +1,11 @@
-// carrito.controller.js
+
 let client;
 
 function setClient(dbClient) {
     client = dbClient;
 }
 
-// Crear un carrito sin usuario (carrito anónimo)
+
 const createAnonymousCarrito = async (req, res) => {
     try {
         const result = await client.query(`
@@ -19,7 +19,7 @@ const createAnonymousCarrito = async (req, res) => {
     }
 };
 
-// Añadir un vehículo al carrito
+
 const addToCarrito = async (req, res) => {
     const { sessionId, vehiculoId, cantidad } = req.body;
 
@@ -29,7 +29,7 @@ const addToCarrito = async (req, res) => {
     }
 
     try {
-        // Obtener el ID del carrito usando el `sessionId`
+
         const carritoResult = await client.query(`SELECT id FROM carrito WHERE session_id = $1`, [sessionId]);
         const carritoId = carritoResult.rows[0]?.id;
 
@@ -40,7 +40,7 @@ const addToCarrito = async (req, res) => {
 
         console.log(`Añadiendo vehiculoId ${vehiculoId} al carritoId ${carritoId} con cantidad ${cantidad}`);
 
-        // Insertar o actualizar el vehículo en el carrito
+
         const insertResult = await client.query(`
             INSERT INTO carrito_vehiculos (carrito_id, vehiculo_id, cantidad) 
             VALUES ($1, $2, $3)
@@ -56,7 +56,7 @@ const addToCarrito = async (req, res) => {
     }
 };
 
-// Obtener el contenido del carrito
+
 const getCarritoBySession = async (req, res) => {
     const { sessionId } = req.params;
 
@@ -76,7 +76,7 @@ const getCarritoBySession = async (req, res) => {
         `, [sessionId]);
 
         if (result.rows.length === 0) {
-            console.log(`Carrito vacío o no encontrado para sessionId: ${sessionId}`);
+            console.log(`esto tienes q eliminar ${sessionId}`);
         }
 
         res.json(result.rows);
@@ -86,7 +86,7 @@ const getCarritoBySession = async (req, res) => {
     }
 };
 
-// Actualizar la cantidad de un producto en el carrito
+
 const updateCarrito = async (req, res) => {
     const { sessionId, vehiculoId, cantidad } = req.body;
 
@@ -115,7 +115,7 @@ const updateCarrito = async (req, res) => {
     }
 };
 
-// Eliminar un producto del carrito
+
 const removeFromCarrito = async (req, res) => {
     const { sessionId, vehiculoId } = req.body;
 

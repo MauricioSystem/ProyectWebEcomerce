@@ -10,18 +10,16 @@
 <body>
     <header>
         <h1>Carrito de <span id="nombre-usuario">Anónimo</span></h1>
-        <button onclick="location.href='index.html'" class="boton-volver">Volver al Inicio</button>
+        <button onclick="location.href='catalogo.html'" class="boton-volver">Volver al catalogo</button>
     </header>
-    <main>
-        <div class="contenido-principal">
-            <div id="carrito-contenido" class="carrito-contenido"></div>
-            <aside class="sidebar">
-                <h2>Últimas Compras</h2>
-                <div id="ultimas-compras" class="ultimas-compras">
-                    <p>Cargando últimas compras...</p>
-                </div>
-            </aside>
-        </div>
+    <main class="contenido-principal">
+        <aside class="sidebar">
+            <h2>Últimas Compras</h2>
+            <div id="ultimas-compras" class="ultimas-compras">
+                <p>Cargando últimas compras...</p>
+            </div>
+        </aside>
+        <section id="carrito-contenido" class="carrito-contenido"></section>
     </main>
     <footer>
         <p>© 2024 M.MOTORS - Todos los derechos reservados.</p>

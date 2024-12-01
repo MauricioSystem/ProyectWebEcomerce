@@ -1,6 +1,6 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #2c2c2c;
+    background-color: #262626;
     color: #f2f2f2;
     margin: 0;
     display: flex;
@@ -10,7 +10,7 @@ body {
 }
 
 header {
-    background-color: #444;
+    background-color: #121111;
     padding: 1.5em 1em;
     width: 100%;
     text-align: center;
@@ -35,20 +35,28 @@ header h1 {
     border-radius: 5px;
     font-size: 1rem;
     margin-top: 1em;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .boton-volver:hover {
     background-color: #aaa;
+    transform: scale(1.05);
+}
+
+.contenido-principal {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    width: 100%;
+    max-width: 1200px;
+    margin: 20px auto;
 }
 
 .carrito-contenido {
-    max-width: 900px;
-    width: 100%;
+    flex: 2;
     padding: 1.5em;
     background-color: #3c3c3c;
     border-radius: 10px;
-    margin: 2em auto;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
 }
 
@@ -78,35 +86,60 @@ header h1 {
     line-height: 1.5;
 }
 
-.boton-cantidad {
-    background-color: #777;
-    color: #fff;
-    border: none;
-    cursor: pointer;
-    padding: 5px 10px;
-    margin: 0 5px;
-    border-radius: 5px;
-    font-size: 1rem;
-    transition: background-color 0.3s ease;
-}
-
-.boton-cantidad:hover {
-    background-color: #aaa;
-}
 
 .boton-eliminar {
-    background-color: #e63946;
+    background-color: #ff4c4c;
     color: #fff;
     border: none;
-    padding: 8px 12px;
-    border-radius: 5px;
+    padding: 8px 16px;
+    border-radius: 8px;
     cursor: pointer;
     font-size: 0.9rem;
-    transition: background-color 0.3s ease;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 5px;
 }
 
 .boton-eliminar:hover {
-    background-color: #ff5c5c;
+    background-color: #ff1c1c;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(255, 28, 28, 0.4);
+}
+
+.boton-eliminar i {
+    font-size: 1rem;
+}
+
+.boton-cantidad {
+    background-color: #00cc52;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 20%;
+    font-size: 1rem;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.boton-cantidad:hover {
+    background-color: #019c80;
+    transform: scale(1.1);
+}
+
+.cantidad-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.cantidad {
+    font-size: 1rem;
+    color: #f2f2f2;
+    font-weight: bold;
 }
 
 .total {
@@ -128,52 +161,61 @@ header h1 {
     border: none;
     cursor: pointer;
     border-radius: 5px;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.2s ease;
     text-align: center;
 }
 
 .boton-comprar:hover {
     background-color: #57c4a3;
+    transform: scale(1.05);
 }
 
-/* Responsividad */
+
+
 @media (max-width: 768px) {
-    .carrito-item {
+    .contenido-principal {
         flex-direction: column;
-        gap: 1em;
+        align-items: center;
+        padding: 10px;
     }
 
-    .total {
-        font-size: 1.2em;
-        text-align: center;
+    .sidebar {
+        max-width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .carrito-contenido {
+        max-width: 100%;
     }
 
     .boton-comprar {
-        width: 100%;
         font-size: 1rem;
+        width: 100%;
     }
 }
 
 @media (max-width: 480px) {
-    body {
-        padding: 0 1em;
-    }
-
     header h1 {
         font-size: 1.5rem;
     }
 
     .carrito-item {
-        padding: 1em 0.5em;
-    }
-
-    .boton-cantidad, .boton-eliminar {
-        font-size: 0.8rem;
-        padding: 4px 8px;
+        flex-direction: column;
+        gap: 1em;
     }
 
     .boton-comprar {
         font-size: 0.9rem;
         padding: 12px 20px;
+    }
+
+    .boton-cantidad {
+        padding: 8px;
+        font-size: 0.9rem;
+    }
+
+    .boton-eliminar {
+        padding: 6px 10px;
+        font-size: 0.8rem;
     }
 }

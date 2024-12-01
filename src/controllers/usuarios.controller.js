@@ -5,12 +5,12 @@ function setClient(dbClient) {
     client = dbClient;
 }
 
-// Crear nuevo usuario y carrito asociado
+
 const crearUsuario = async (req, res) => {
     const { nombre, email, password, rol } = req.body;
 
     try {
-        // Verificar si el usuario ya existe
+        //no verifica nadaaaaaaaaaaaaaaaaaaaaa
         const checkUserQuery = 'SELECT * FROM usuarios WHERE email = $1';
         const userExist = await client.query(checkUserQuery, [email]);
         
@@ -18,10 +18,10 @@ const crearUsuario = async (req, res) => {
             return res.status(400).json({ message: 'El usuario ya está registrado.' });
         }
 
-        // Hashear la contraseña
+        //aaaaaaaaaaaaaa esto no funciona
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        // Insertar nuevo usuario en la base de datos
+
         const insertUserQuery = `
             INSERT INTO usuarios (nombre, email, password, rol) 
             VALUES ($1, $2, $3, $4) RETURNING id, nombre
@@ -29,14 +29,14 @@ const crearUsuario = async (req, res) => {
         const newUser = await client.query(insertUserQuery, [nombre, email, hashedPassword, rol]);
         const userId = newUser.rows[0].id;
 
-        // Crear carrito asociado al nuevo usuario
+
         const insertCarritoQuery = `
             INSERT INTO carrito (usuario_id) 
             VALUES ($1) RETURNING session_id
         `;
         const newCarrito = await client.query(insertCarritoQuery, [userId]);
 
-        // Responder con los datos del usuario y session_id del carrito
+
         res.status(201).json({ 
             message: 'Usuario y carrito creados con éxito', 
             user: { id: userId, nombre: newUser.rows[0].nombre, session_id: newCarrito.rows[0].session_id } 
@@ -71,14 +71,14 @@ const iniciarSesion = async (req, res) => {
         const carritoResult = await client.query(carritoQuery, [user.id]);
         const sessionId = carritoResult.rows[0]?.session_id;
 
-        // Responder con los datos del usuario, incluido el rol
+
         res.status(200).json({
             message: 'Usuario logeado correctamente',
             user: {
                 id: user.id,
                 nombre: user.nombre,
                 sessionId,
-                rol: user.rol // Incluye el rol
+                rol: user.rol 
             }
         });
     } catch (error) {

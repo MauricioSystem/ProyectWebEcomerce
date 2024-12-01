@@ -80,7 +80,7 @@ select:focus {
     outline: none;
 }
 
-/* Botón de envío */
+
 button {
     padding: 12px;
     font-size: 1rem;
@@ -103,7 +103,7 @@ button:active {
     transform: translateY(1px);
 }
 
-/* Botón alternar formulario */
+
 #toggleForm {
     margin-top: 20px;
     color: #383838;
@@ -120,7 +120,7 @@ button:active {
     color: #00b922;
 }
 
-/* Media Queries para Responsividad */
+
 @media (max-width: 768px) {
     .container {
         padding: 30px 20px;
@@ -139,6 +139,26 @@ button:active {
         padding: 12px;
     }
 }
+
+
+.recuperar-password {
+    margin-top: 15px;
+    font-size: 0.9rem;
+    color: #383838;
+}
+
+.recuperar-password a {
+    text-decoration: underline;
+    color: #00b922;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.recuperar-password a:hover {
+    color: #0fe52c;
+}
+ 
+
 
 @media (min-width: 768px) and (max-width: 1024px) {
     .container {

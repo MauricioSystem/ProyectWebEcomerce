@@ -1,4 +1,4 @@
-// Registrar un nuevo usuario usando la API
+
 async function registrarUsuario(nombre, email, password, rol) {
     try {
         const response = await axios.post("http://localhost:3000/api/usuarios/register", {
@@ -15,7 +15,7 @@ async function registrarUsuario(nombre, email, password, rol) {
     }
 }
 
-// Conectar el envío del formulario de registro a la función registrarUsuario
+
 document.getElementById("formRegistro").addEventListener("submit", async (e) => {
     e.preventDefault();
     const nombre = document.getElementById("nombre").value;
@@ -39,13 +39,13 @@ async function iniciarSesion(email, password) {
 
             const { sessionId, nombre, rol, id } = response.data.user;
 
-            // Guardar datos del usuario en localStorage
+            
             localStorage.setItem('sessionId', sessionId);
             localStorage.setItem('nombreUsuario', nombre);
             localStorage.setItem('usuarioId', id);
-            localStorage.setItem('rolUsuario', rol); // Guardar el rol del usuario
+            localStorage.setItem('rolUsuario', rol); 
 
-            // Redirigir según el rol del usuario
+           
             if (rol === 'admin') {
                 window.location.href = "/public/vistaAdministrador.html";
             } else {

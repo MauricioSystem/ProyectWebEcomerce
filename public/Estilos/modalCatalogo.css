@@ -9,7 +9,7 @@
     visibility: hidden;
     z-index: 999;
     transition: opacity 0.4s ease, visibility 0.4s ease; 
-    pointer-events: none; /*no interacion*/
+    pointer-events: none; /*no interacion no hace nadaaaaaaaaaaaaaa*/
 }
 
 

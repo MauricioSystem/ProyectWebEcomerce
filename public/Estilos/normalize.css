@@ -1,4 +1,4 @@
-/* Normalización de estilos */
+
 * {
     margin: 0;
     padding: 0;
@@ -10,5 +10,5 @@ body {
     line-height: 1.6;
     padding: 0;
     margin: 0;
-    background-color: #bebebe; /* Fondo claro */
+    background-color: #bebebe; 
 }

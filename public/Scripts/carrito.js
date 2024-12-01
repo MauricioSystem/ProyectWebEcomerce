@@ -136,17 +136,22 @@ document.addEventListener('DOMContentLoaded', function () {
             console.error("Error al realizar la compra:", error);
             alert("Error al realizar la compra. Intenta nuevamente.");
         }
+        window.location.reload(); 
     }
 
 
 
     async function cargarUltimasCompras() {
-        const usuarioId = localStorage.getItem('usuarioId'); // Obtén el usuario ID del localStorage
+        const nombreUsuario = localStorage.getItem('nombreUsuario'); 
+        const usuarioId = localStorage.getItem('usuarioId'); 
     
-        if (!usuarioId) {
-            console.error('Error: Usuario no autenticado.');
-            alert('Por favor, inicia sesión para ver tus últimas compras.');
-            return;
+    
+        if (!usuarioId || nombreUsuario === 'Anónimo') {
+            const sidebar = document.getElementById('ultimas-compras');
+            if (sidebar) {
+                sidebar.innerHTML = '<p>No disponible para usuarios anónimos.</p>';
+            }
+            return; // Salir de la función
         }
     
         try {
@@ -158,23 +163,24 @@ document.addEventListener('DOMContentLoaded', function () {
         } catch (error) {
             console.error('Error al cargar las últimas compras:', error);
         }
+        
+        
     }
     
-
     function mostrarUltimasCompras(compras) {
         const sidebar = document.getElementById('ultimas-compras');
         if (!sidebar) {
             console.error('Error: No se encontró el contenedor de últimas compras.');
             return;
         }
-    
-        sidebar.innerHTML = ''; // Limpia el contenido anterior
-    
         if (compras.length === 0) {
-            sidebar.innerHTML = '<p>No hay compras recientes.</p>';
+            sidebar.innerHTML = '<p>No hay compras recientes...</p>';
             return;
         }
-    
+            
+       
+            sidebar.innerHTML= ''; // Limpia el contenido anterior
+        
         compras.forEach((compra) => {
             const compraItem = document.createElement('div');
             compraItem.classList.add('compra-item');
@@ -185,8 +191,11 @@ document.addEventListener('DOMContentLoaded', function () {
                 <p><strong>Subtotal:</strong> ${compra.subtotal} Bs.</p>
                 <hr>
             `;
+
             sidebar.appendChild(compraItem);
         });
+        
+       
     }
     
 

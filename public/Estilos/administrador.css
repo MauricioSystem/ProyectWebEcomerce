@@ -1,4 +1,4 @@
-/* Estilos generales */
+
 body {
     font-family: Arial, sans-serif;
     background-color: #f8f9fa;
@@ -7,7 +7,7 @@ body {
     padding: 0;
 }
 
-/* Header */
+
 header {
     display: flex;
     justify-content: space-between;
@@ -51,7 +51,7 @@ header h1 {
     background-color: #c9302c;
 }
 
-/* Gestión de vehículos */
+
 .gestion-vehiculos {
     padding: 30px 20px;
     text-align: center;
@@ -65,7 +65,7 @@ h2 {
     color: #212529;
 }
 
-/* Contenedor de vehículos */
+
 #vehiculos-contenedor {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -73,7 +73,7 @@ h2 {
     margin-bottom: 30px;
 }
 
-/* Tarjeta de vehículo */
+
 .vehiculo-bloque {
     background-color: #ffffff;
     border: 1px solid #ced4da;
@@ -114,7 +114,7 @@ h2 {
     margin-top: 10px;
 }
 
-/* Botones de acciones */
+
 .boton-editar,
 .boton-eliminar {
     padding: 8px 15px;
@@ -143,7 +143,7 @@ h2 {
     background-color: #c9302c;
 }
 
-/* Botón Crear Vehículo */
+
 #crear-vehiculo {
     background-color: #0275d8;
     color: #ffffff;
@@ -161,7 +161,7 @@ h2 {
     transform: scale(1.05);
 }
 
-/* Footer */
+
 footer {
     background-color: #212529;
     color: #e6e6e6;
@@ -172,7 +172,7 @@ footer {
 }
 
 
-/* Gestión de facturas */
+
 .gestion-facturas {
     text-align: center;
     margin-top: 30px;
@@ -194,7 +194,7 @@ footer {
     transform: scale(1.05);
 }
 
-/* Responsivo */
+
 @media (max-width: 768px) {
     .gestion-vehiculos, 
     .gestion-facturas {

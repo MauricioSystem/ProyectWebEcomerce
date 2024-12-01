@@ -53,7 +53,7 @@ async function crearCarritoAnonimo() {
         });
 
         const data = await response.json();
-        return data.session_id;  // Devuelve el session_id del carrito creado
+        return data.session_id;  // da el id del fakin carro
     } catch (error) {
         console.error("Error al crear carrito anónimo:", error);
         return null;

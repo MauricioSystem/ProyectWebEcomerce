@@ -6,7 +6,7 @@ function setClient(dbClient) {
     client = dbClient;
 }
 
-// Obtener todos los vehículos
+
 const getAllVehiculos = async (req, res) => {
     try {
         const query = `
@@ -33,7 +33,7 @@ const getAllVehiculos = async (req, res) => {
     }
 };
 
-// Obtener vehículos por marca
+// marca
 const getVehiculosByMarcaId = async (req, res) => {
     const marcaId = parseInt(req.params.marcaId, 10);
 
@@ -68,7 +68,7 @@ const getVehiculosByMarcaId = async (req, res) => {
     }
 };
 
-// Crear un nuevo vehículo
+
 const createVehiculo = async (req, res) => {
     const { marca_id, tipo_id, descripcion, precio } = req.body;
     const imagen = req.file ? `/uploads/${req.file.filename}` : null;
@@ -93,7 +93,7 @@ const createVehiculo = async (req, res) => {
 
 
 
-// Editar un vehículo existente
+
 const updateVehiculo = async (req, res) => {
     const { id } = req.params;
     const { marca_id, tipo_id, descripcion, precio } = req.body;
@@ -114,21 +114,21 @@ const updateVehiculo = async (req, res) => {
     }
 };
 
-// Eliminar un vehículo
+
 const deleteVehiculo = async (req, res) => {
     const { id } = req.params;
 
     try {
-        // Eliminar vehículo por ID
+        
         const query = `DELETE FROM vehiculos WHERE id = $1 RETURNING *;`;
         const result = await client.query(query, [id]);
 
-        // Verificar si el vehículo existía
+        
         if (result.rowCount === 0) {
             return res.status(404).json({ message: 'Vehículo no encontrado' });
         }
 
-        // Eliminar archivo de imagen asociado, si existe
+        
         const vehiculo = result.rows[0];
         if (vehiculo.imagen) {
             const filePath = path.join(__dirname, '../../', vehiculo.imagen);

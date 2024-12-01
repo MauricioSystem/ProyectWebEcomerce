@@ -2,23 +2,23 @@ document.addEventListener('DOMContentLoaded', async () => {
     const nombreAdmin = document.getElementById('nombre-admin');
     const cerrarSesionBtn = document.getElementById('cerrar-sesion');
     const crearVehiculoBtn = document.getElementById('crear-vehiculo');
-    const verFacturasBtn = document.getElementById('ver-facturas'); // Botón para ver facturas
+    const verFacturasBtn = document.getElementById('ver-facturas'); 
 
-    // Mostrar el nombre del administrador dinámicamente
+    // mostrar el nombre del admin igual el pinche usuario 
     const nombreUsuario = localStorage.getItem('nombreUsuario');
     if (nombreUsuario) {
         nombreAdmin.textContent = nombreUsuario;
     } else {
-        nombreAdmin.textContent = 'Administrador'; // Fallback si no hay datos
+        nombreAdmin.textContent = 'Administrador'; 
     }
 
-    // Manejo del botón de cerrar sesión
+   
     cerrarSesionBtn.addEventListener('click', () => {
-        localStorage.clear(); // Limpia la sesión
-        window.location.href = '/public/index.html'; // Redirige al inicio de sesión
+        localStorage.clear(); 
+        window.location.href = '/public/index.html'; 
     });
 
-    // Cargar y mostrar los vehículos
+    
     async function cargarVehiculos() {
         try {
             const response = await fetch('http://localhost:3000/api/vehiculos', { mode: 'cors' });
@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
 
-    // Mostrar los vehículos en el contenedor
+
     function mostrarVehiculos(vehiculos) {
         const contenedor = document.getElementById('vehiculos-contenedor');
         if (!contenedor) {
@@ -40,13 +40,13 @@ document.addEventListener('DOMContentLoaded', async () => {
             return;
         }
 
-        contenedor.innerHTML = ''; // Limpiar contenido previo
+        contenedor.innerHTML = ''; 
 
         vehiculos.forEach((vehiculo) => {
             const vehiculoBloque = document.createElement('div');
             vehiculoBloque.className = 'vehiculo-bloque';
 
-            // Asignar todos los atributos de datos
+            
             vehiculoBloque.dataset.id = vehiculo.id;
             vehiculoBloque.dataset.imagen = vehiculo.imagen;
             vehiculoBloque.dataset.marca = vehiculo.marca;
@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 </div>
             `;
 
-            // Agregar eventos para eliminar y editar
+            
             vehiculoBloque.querySelector('.eliminar').addEventListener('click', () => eliminarVehiculo(vehiculo.id));
             vehiculoBloque.querySelector('.editar').addEventListener('click', () => abrirModal(vehiculo));
 
@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     }
 
-    // Eliminar un vehículo
+    
     async function eliminarVehiculo(id) {
         try {
             const response = await fetch(`http://localhost:3000/api/vehiculos/${id}`, {
@@ -81,14 +81,15 @@ document.addEventListener('DOMContentLoaded', async () => {
             if (!response.ok) {
                 throw new Error('Error al eliminar el vehículo.');
             }
-            alert('Vehículo eliminado correctamente.');
-            cargarVehiculos(); // Recargar la lista de vehículos
+            cargarVehiculos(); 
         } catch (error) {
             console.error('Error al eliminar el vehículo:', error);
         }
     }
 
-    // Abrir modal para editar un vehículo
+
+
+    //modal maldiytooooooo
     function abrirModal(vehiculo) {
         const modal = document.getElementById('adminModal');
         const marcaField = document.getElementById('marca');
@@ -97,16 +98,16 @@ document.addEventListener('DOMContentLoaded', async () => {
         const precioField = document.getElementById('precio');
         const guardarCambiosBtn = document.getElementById('guardarCambios');
 
-        // Prellenar el formulario con los datos del vehículo
+
         marcaField.value = vehiculo.marca_id || '';
         tipoField.value = vehiculo.tipo_id || '';
         descripcionField.value = vehiculo.descripcion || '';
         precioField.value = vehiculo.precio || '';
 
-        // Mostrar el modal
+
         modal.style.display = 'flex';
 
-        // Agregar el evento de guardar cambios
+
         guardarCambiosBtn.onclick = async function () {
             const data = {
                 marca_id: parseInt(marcaField.value, 10),
@@ -127,8 +128,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                 }
 
                 alert('Vehículo actualizado correctamente.');
-                modal.style.display = 'none'; // Cerrar el modal
-                cargarVehiculos(); // Recargar la lista
+                modal.style.display = 'none';
+                cargarVehiculos(); 
             } catch (error) {
                 console.error('Error al actualizar el vehículo:', error);
                 alert('Hubo un problema al actualizar el vehículo.');
@@ -142,12 +143,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         modal.style.display = 'none';
     });
 
-    // Crear un nuevo vehículo (Redirige a la página de creación)
+    
+
+
     crearVehiculoBtn.addEventListener('click', () => {
         window.location.href = '/public/crearVehiculo.html';
     });
-
-    // Ver facturas (Redirige a la vista de facturas)
     verFacturasBtn.addEventListener('click', () => {
         window.location.href = '/public/vistaFactura.html';
     });
