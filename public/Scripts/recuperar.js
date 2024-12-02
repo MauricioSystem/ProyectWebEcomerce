@@ -1,11 +1,10 @@
-// Elementos del DOM
+
 const formRecuperar = document.getElementById('formRecuperar');
 const formCodigo = document.getElementById('formCodigo');
 const codigoVerificacion = document.getElementById('codigo-verificacion');
 const timerElement = document.getElementById('timer');
 let timerInterval;
 
-// Función para enviar código de verificación
 formRecuperar.addEventListener('submit', async (e) => {
     e.preventDefault();
 
@@ -27,7 +26,7 @@ formRecuperar.addEventListener('submit', async (e) => {
 
         alert('Código enviado. Revisa tu correo.');
         codigoVerificacion.style.display = 'block';
-        startTimer(300); 
+        startTimer(60); // 1 * 60 * 1000
         
     } catch (error) {
         console.error('Error al enviar el código:', error);
@@ -57,14 +56,14 @@ formCodigo.addEventListener('submit', async (e) => {
         }
 
         alert('Contraseña actualizada con éxito.');
-        location.href = 'index.html'; // Redirigir al inicio de sesión
+        location.href = 'index.html'; 
     } catch (error) {
         console.error('Error al actualizar la contraseña:', error);
         alert(error.message || 'Hubo un problema al actualizar la contraseña.');
     }
 });
 
-// Función para iniciar el temporizador de expiración del código
+
 function startTimer(duration) {
     let timer = duration;
 
@@ -78,14 +77,14 @@ function startTimer(duration) {
         if (timer < 0) {
             clearInterval(timerInterval);
             timerElement.textContent = 'El código ha expirado.';
-            disableCodeSubmission(); // Deshabilitar la verificación si el código expira
+            disableCodeSubmission(); 
         }
     }, 1000);
 }
 
-// Función para deshabilitar la sección de verificación tras la expiración
+
 function disableCodeSubmission() {
     const inputs = document.querySelectorAll('#formCodigo input, #formCodigo button');
     inputs.forEach(input => (input.disabled = true));
-    alert('El código ha expirado. Solicita uno nuevo.');
+    alert('El código ha expirado. pide para q te envie otro codigo lerdo.');
 }

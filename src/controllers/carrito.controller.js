@@ -1,11 +1,10 @@
-
 let client;
 
 function setClient(dbClient) {
     client = dbClient;
 }
 
-
+// Crear carrito anónimo
 const createAnonymousCarrito = async (req, res) => {
     try {
         const result = await client.query(`
@@ -19,7 +18,7 @@ const createAnonymousCarrito = async (req, res) => {
     }
 };
 
-
+// Añadir al carrito
 const addToCarrito = async (req, res) => {
     const { sessionId, vehiculoId, cantidad } = req.body;
 
@@ -29,7 +28,6 @@ const addToCarrito = async (req, res) => {
     }
 
     try {
-
         const carritoResult = await client.query(`SELECT id FROM carrito WHERE session_id = $1`, [sessionId]);
         const carritoId = carritoResult.rows[0]?.id;
 
@@ -39,7 +37,6 @@ const addToCarrito = async (req, res) => {
         }
 
         console.log(`Añadiendo vehiculoId ${vehiculoId} al carritoId ${carritoId} con cantidad ${cantidad}`);
-
 
         const insertResult = await client.query(`
             INSERT INTO carrito_vehiculos (carrito_id, vehiculo_id, cantidad) 
@@ -56,7 +53,7 @@ const addToCarrito = async (req, res) => {
     }
 };
 
-
+// Obtener carrito por sesión
 const getCarritoBySession = async (req, res) => {
     const { sessionId } = req.params;
 
@@ -76,7 +73,7 @@ const getCarritoBySession = async (req, res) => {
         `, [sessionId]);
 
         if (result.rows.length === 0) {
-            console.log(`esto tienes q eliminar ${sessionId}`);
+            console.log(`Carrito vacío para sessionId: ${sessionId}`);
         }
 
         res.json(result.rows);
@@ -86,7 +83,7 @@ const getCarritoBySession = async (req, res) => {
     }
 };
 
-
+// Actualizar cantidad de producto en el carrito
 const updateCarrito = async (req, res) => {
     const { sessionId, vehiculoId, cantidad } = req.body;
 
@@ -115,7 +112,7 @@ const updateCarrito = async (req, res) => {
     }
 };
 
-
+// Eliminar producto del carrito
 const removeFromCarrito = async (req, res) => {
     const { sessionId, vehiculoId } = req.body;
 
@@ -143,11 +140,100 @@ const removeFromCarrito = async (req, res) => {
     }
 };
 
+const confirmarCompra = async (req, res) => {
+    const { sessionId, usuarioId } = req.body;
+
+    if (!sessionId || !usuarioId || !req.file) {
+        return res.status(400).json({ error: 'Todos los campos son requeridos, incluido el comprobante.' });
+    }
+
+    const filePath = `/uploads/${req.file.filename}`;
+    try {
+        // Obtener el carrito asociado a la sesión
+        const carritoResult = await client.query(`
+            SELECT id FROM carrito WHERE session_id = $1
+        `, [sessionId]);
+
+        const carritoId = carritoResult.rows[0]?.id;
+        if (!carritoId) {
+            return res.status(404).json({ error: 'Carrito no encontrado.' });
+        }
+
+        // Crear una nueva factura
+        const facturaResult = await client.query(`
+            INSERT INTO facturas (usuario_id, fecha, total)
+            VALUES ($1, CURRENT_TIMESTAMP, 0)
+            RETURNING id
+        `, [usuarioId]);
+
+        const facturaId = facturaResult.rows[0].id;
+
+        // Obtener los productos del carrito
+        const productosResult = await client.query(`
+            SELECT cv.vehiculo_id, cv.cantidad, v.precio
+            FROM carrito_vehiculos cv
+            INNER JOIN vehiculos v ON cv.vehiculo_id = v.id
+            WHERE cv.carrito_id = $1
+        `, [carritoId]);
+
+        const productos = productosResult.rows;
+        if (productos.length === 0) {
+            return res.status(400).json({ error: 'El carrito está vacío.' });
+        }
+
+        let totalFactura = 0;
+
+        // Insertar los detalles de la factura
+        for (const producto of productos) {
+            const subtotal = producto.cantidad * producto.precio;
+            totalFactura += subtotal;
+
+            await client.query(`
+                INSERT INTO detalles_factura (factura_id, vehiculo_id, cantidad, precio_unitario)
+                VALUES ($1, $2, $3, $4)
+            `, [facturaId, producto.vehiculo_id, producto.cantidad, producto.precio]);
+        }
+
+        // Actualizar el total de la factura
+        await client.query(`
+            UPDATE facturas SET total = $1 WHERE id = $2
+        `, [totalFactura, facturaId]);
+
+        // Eliminar los productos del carrito
+        await client.query(`
+            DELETE FROM carrito_vehiculos WHERE carrito_id = $1
+        `, [carritoId]);
+
+        res.status(200).json({
+            message: 'Compra confirmada exitosamente.',
+            facturaId,
+            comprobante: filePath,
+        });
+    } catch (error) {
+        console.error('Error al confirmar la compra:', error);
+        res.status(500).json({ error: 'Error al confirmar la compra.' });
+    }
+};
+
+// Subir archivo
+const uploadFile = (req, res) => {
+    if (!req.file) {
+        return res.status(400).json({ error: 'No se proporcionó ningún archivo.' });
+    }
+
+    res.status(200).json({
+        message: 'Archivo subido exitosamente.',
+        filePath: `/uploads/${req.file.filename}`,
+    });
+};
+
 module.exports = {
     setClient,
     createAnonymousCarrito,
     addToCarrito,
     getCarritoBySession,
     updateCarrito,
-    removeFromCarrito
+    removeFromCarrito,
+    confirmarCompra,
+    uploadFile,
 };

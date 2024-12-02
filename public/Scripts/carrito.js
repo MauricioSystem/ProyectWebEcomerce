@@ -1,19 +1,33 @@
 document.addEventListener('DOMContentLoaded', function () {
     const nombreUsuario = localStorage.getItem('nombreUsuario') || 'Anónimo';
-    const usuarioId = localStorage.getItem('usuarioId'); 
+    const usuarioId = localStorage.getItem('usuarioId');
+    const sessionId = localStorage.getItem('sessionId');
     const nombreUsuarioElemento = document.getElementById('nombre-usuario');
+    const carritoContenido = document.getElementById("carrito-contenido");
+    const ultimasComprasContainer = document.getElementById("ultimas-compras");
+
+    // Modal
+    const modalComprar = document.getElementById('modal-comprar');
+    const modalCerrar = document.getElementById('modal-cerrar');
+    const formComprobante = document.getElementById('form-comprobante');
+    const inputComprobante = document.getElementById('input-comprobante');
+
     if (nombreUsuarioElemento) {
         nombreUsuarioElemento.textContent = nombreUsuario;
     }
 
-    let sessionId = localStorage.getItem('sessionId');
     if (!sessionId) {
         alert("Por favor inicia sesión para ver el carrito.");
-        window.location.href = 'http://127.0.0.1:3001/public/inicioSesion.html';
+        window.location.href = '/public/inicioSesion.html';
         return;
     }
 
-    const carritoContenido = document.getElementById("carrito-contenido");
+    let carritoItems = [];
+
+    // Abrir y cerrar modal
+    modalCerrar.addEventListener('click', () => {
+        modalComprar.style.display = 'none';
+    });
 
     async function cargarCarrito() {
         try {
@@ -23,23 +37,23 @@ document.addEventListener('DOMContentLoaded', function () {
                 throw new Error("Error al obtener el carrito. Verifica la conexión.");
             }
 
-            const carritoItems = await response.json();
+            carritoItems = await response.json();
             mostrarCarrito(carritoItems);
         } catch (error) {
             console.error("Error al cargar el carrito:", error);
         }
     }
 
-    function mostrarCarrito(carritoItems) {
-        carritoContenido.innerHTML = ""; 
+    function mostrarCarrito(items) {
+        carritoContenido.innerHTML = "";
         let total = 0;
 
-        if (!Array.isArray(carritoItems)) {
-            console.error("Error: carritoItems no es un array", carritoItems);
+        if (!Array.isArray(items) || items.length === 0) {
+            carritoContenido.innerHTML = "<p>El carrito está vacío.</p>";
             return;
         }
 
-        carritoItems.forEach(item => {
+        items.forEach(item => {
             const subtotal = item.cantidad * item.precio;
             total += subtotal;
 
@@ -52,12 +66,12 @@ document.addEventListener('DOMContentLoaded', function () {
                 </div>
                 <div>
                     <p>Cantidad:
-                        <button class="boton-cantidad" onclick="window.actualizarCantidad('${item.vehiculo_id}', ${item.cantidad - 1})">-</button>
+                        <button class="boton-cantidad" onclick="actualizarCantidad('${item.vehiculo_id}', ${item.cantidad - 1})">-</button>
                         ${item.cantidad}
-                        <button class="boton-cantidad" onclick="window.actualizarCantidad('${item.vehiculo_id}', ${item.cantidad + 1})">+</button>
+                        <button class="boton-cantidad" onclick="actualizarCantidad('${item.vehiculo_id}', ${item.cantidad + 1})">+</button>
                     </p>
                     <p>Subtotal: ${subtotal} Bs.</p>
-                    <button class="boton-eliminar" onclick="window.eliminarProducto('${item.vehiculo_id}')">Eliminar</button>
+                    <button class="boton-eliminar" onclick="eliminarProducto('${item.vehiculo_id}')">Eliminar</button>
                 </div>
             `;
             carritoContenido.appendChild(itemElement);
@@ -71,11 +85,13 @@ document.addEventListener('DOMContentLoaded', function () {
         const comprarButton = document.createElement("button");
         comprarButton.className = "boton-comprar";
         comprarButton.textContent = "Comprar";
-        comprarButton.addEventListener("click", comprarCarrito);
+        comprarButton.addEventListener("click", () => {
+            modalComprar.style.display = 'block';
+        });
         carritoContenido.appendChild(comprarButton);
     }
 
-    window.actualizarCantidad = async function actualizarCantidad(vehiculoId, nuevaCantidad) {
+    async function actualizarCantidad(vehiculoId, nuevaCantidad) {
         if (nuevaCantidad < 1) {
             eliminarProducto(vehiculoId);
             return;
@@ -85,7 +101,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const response = await fetch(`http://localhost:3000/api/carrito/editar/${vehiculoId}`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ sessionId, vehiculoId, cantidad: nuevaCantidad })
+                body: JSON.stringify({ sessionId, vehiculoId, cantidad: nuevaCantidad }),
             });
             if (response.ok) {
                 cargarCarrito();
@@ -93,14 +109,14 @@ document.addEventListener('DOMContentLoaded', function () {
         } catch (error) {
             console.error("Error al actualizar el carrito:", error);
         }
-    };
+    }
 
-    window.eliminarProducto = async function eliminarProducto(vehiculoId) {
+    async function eliminarProducto(vehiculoId) {
         try {
             const response = await fetch(`http://localhost:3000/api/carrito/eliminar/${vehiculoId}`, {
                 method: "DELETE",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ sessionId, vehiculoId })
+                body: JSON.stringify({ sessionId, vehiculoId }),
             });
             if (response.ok) {
                 cargarCarrito();
@@ -110,80 +126,67 @@ document.addEventListener('DOMContentLoaded', function () {
         } catch (error) {
             console.error("Error al eliminar el producto:", error);
         }
-    };
+    }
 
-    async function comprarCarrito() {
-        if (!usuarioId || !sessionId) {
-            alert("Por favor, inicia sesión para realizar la compra.");
+    formComprobante.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        if (!inputComprobante.files.length) {
+            alert("Debe subir un comprobante para realizar la compra.");
             return;
         }
 
+        const formData = new FormData();
+        formData.append('file', inputComprobante.files[0]);
+        formData.append('sessionId', sessionId);
+        formData.append('usuarioId', usuarioId);
+
         try {
-            const response = await fetch("http://localhost:3000/api/factura/crear", {
+            const response = await fetch("http://localhost:3000/api/carrito/confirmar-compra", {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ sessionId, usuarioId })
+                body: formData,
             });
 
-            if (!response.ok) {
-                throw new Error("Error al realizar la compra.");
-            }
+            if (!response.ok) throw new Error("Error al realizar la compra.");
 
             const data = await response.json();
             alert(`Compra realizada exitosamente. Factura ID: ${data.facturaId}`);
-            cargarCarrito(); 
+            modalComprar.style.display = 'none';
+            cargarCarrito();
         } catch (error) {
             console.error("Error al realizar la compra:", error);
             alert("Error al realizar la compra. Intenta nuevamente.");
         }
-        window.location.reload(); 
-    }
-
-
+    });
 
     async function cargarUltimasCompras() {
-        const nombreUsuario = localStorage.getItem('nombreUsuario'); 
-        const usuarioId = localStorage.getItem('usuarioId'); 
-    
-    
         if (!usuarioId || nombreUsuario === 'Anónimo') {
-            const sidebar = document.getElementById('ultimas-compras');
-            if (sidebar) {
-                sidebar.innerHTML = '<p>No disponible para usuarios anónimos.</p>';
-            }
-            return; // Salir de la función
+            ultimasComprasContainer.innerHTML = '<p>No disponible para usuarios anónimos.</p>';
+            return;
         }
-    
+
         try {
             const response = await fetch(`http://localhost:3000/api/detalles_factura/usuario/${usuarioId}`);
             if (!response.ok) throw new Error('Error al obtener las últimas compras.');
-    
+
             const compras = await response.json();
             mostrarUltimasCompras(compras);
         } catch (error) {
             console.error('Error al cargar las últimas compras:', error);
         }
-        
-        
     }
-    
+
     function mostrarUltimasCompras(compras) {
-        const sidebar = document.getElementById('ultimas-compras');
-        if (!sidebar) {
-            console.error('Error: No se encontró el contenedor de últimas compras.');
+        ultimasComprasContainer.innerHTML = "";
+
+        if (!Array.isArray(compras) || compras.length === 0) {
+            ultimasComprasContainer.innerHTML = "<p>No hay compras recientes...</p>";
             return;
         }
-        if (compras.length === 0) {
-            sidebar.innerHTML = '<p>No hay compras recientes...</p>';
-            return;
-        }
-            
-       
-            sidebar.innerHTML= ''; // Limpia el contenido anterior
-        
-        compras.forEach((compra) => {
+
+        compras.forEach(compra => {
             const compraItem = document.createElement('div');
-            compraItem.classList.add('compra-item');
+            compraItem.className = 'compra-item';
             compraItem.innerHTML = `
                 <p><strong>Factura ID:</strong> ${compra.factura_id}</p>
                 <p><strong>Vehículo:</strong> ${compra.vehiculo}</p>
@@ -191,14 +194,14 @@ document.addEventListener('DOMContentLoaded', function () {
                 <p><strong>Subtotal:</strong> ${compra.subtotal} Bs.</p>
                 <hr>
             `;
-
-            sidebar.appendChild(compraItem);
+            ultimasComprasContainer.appendChild(compraItem);
         });
-        
-       
     }
-    
 
     cargarCarrito();
     cargarUltimasCompras();
+
+    // Exponer funciones globales
+    window.actualizarCantidad = actualizarCantidad;
+    window.eliminarProducto = eliminarProducto;
 });

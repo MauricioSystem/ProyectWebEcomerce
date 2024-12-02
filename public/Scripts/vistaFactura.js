@@ -18,11 +18,15 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     function mostrarDetallesFactura(detallesFactura) {
-        facturaContenido.innerHTML = ''; 
+        facturaContenido.innerHTML = '';
 
         detallesFactura.forEach((detalle) => {
             const detalleElement = document.createElement('div');
             detalleElement.className = 'detalle-factura';
+
+            // Recupera el estado guardado en LocalStorage
+            const estadoGuardado = localStorage.getItem(`factura-${detalle.factura_id}`) || 'En espera';
+            const estaAprobada = estadoGuardado === 'Aprobada';
 
             detalleElement.innerHTML = `
                 <p><strong>Factura ID:</strong> ${detalle.factura_id}</p>
@@ -32,12 +36,32 @@ document.addEventListener('DOMContentLoaded', async () => {
                 <p><strong>Precio Unitario:</strong> ${detalle.precio_unitario} Bs.</p>
                 <p><strong>Subtotal:</strong> ${detalle.subtotal} Bs.</p>
                 <p><strong>Fecha:</strong> ${detalle.fecha_factura}</p>
+                <div>
+                    <label class="switch">
+                        <input type="checkbox" onchange="toggleEstado(this, ${detalle.factura_id})" ${
+                            estaAprobada ? 'checked' : ''
+                        }>
+                        <span class="slider"></span>
+                    </label>
+                    <span id="estado-${detalle.factura_id}">${estadoGuardado}</span>
+                </div>
                 <hr>
             `;
 
             facturaContenido.appendChild(detalleElement);
         });
     }
+
+    window.toggleEstado = (checkbox, facturaId) => {
+        const estadoElement = document.getElementById(`estado-${facturaId}`);
+        const nuevoEstado = checkbox.checked ? 'Aprobada' : 'En espera';
+
+        // Actualiza el estado visual
+        estadoElement.textContent = nuevoEstado;
+
+        // Guarda el estado en LocalStorage
+        localStorage.setItem(`factura-${facturaId}`, nuevoEstado);
+    };
 
     cargarDetallesFactura();
 });

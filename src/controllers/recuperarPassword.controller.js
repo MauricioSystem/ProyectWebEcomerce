@@ -7,12 +7,11 @@ function setClient(dbClient) {
     client = dbClient;
 }
 
-// Enviar código al correo
 const enviarCodigo = async (req, res) => {
     const { email } = req.body;
 
     try {
-        // Verificar si el email existe en la tabla usuarios
+       
         const userQuery = 'SELECT * FROM usuarios WHERE email = $1';
         const userResult = await client.query(userQuery, [email]);
 
@@ -21,9 +20,9 @@ const enviarCodigo = async (req, res) => {
         }
 
         const codigo = Math.floor(1000 + Math.random() * 9000).toString();
-        const expiracion = new Date(Date.now() + 1 * 60 * 1000); 
+        const expiracion = new Date(Date.now() + 1 * 60 * 1000);  // 1 * 60 * 1000
 
-        // Guardar el código en la base de datos
+        // Guardar el código 
         const codigoQuery = `
             INSERT INTO codigos_verificacion (email, codigo, expiracion)
             VALUES ($1, $2, $3)
@@ -60,7 +59,6 @@ const verificarCodigoYActualizarPassword = async (req, res) => {
     const { email, codigo, nuevaPassword } = req.body;
 
     try {
-        // Verificar si el código es válido
         const codigoQuery = `
             SELECT * FROM codigos_verificacion
             WHERE email = $1 AND codigo = $2 AND expiracion > NOW();

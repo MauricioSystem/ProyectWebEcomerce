@@ -24,6 +24,25 @@
     <footer>
         <p>© 2024 M.MOTORS - Todos los derechos reservados.</p>
     </footer>
+
+    <div id="modal-comprar" class="modal">
+        <div class="modal-contenido">
+            <span id="modal-cerrar" class="cerrar">&times;</span>
+            <h2>Confirmar Compra</h2>
+            <form id="form-comprobante" enctype="multipart/form-data">
+                <div class="imagen-preview">
+                    <img id="preview-imagen" src="/public/images/qr.jpeg" alt="Previsualización de Comprobante">
+                </div>
+                <label for="input-comprobante">Subir Comprobante de Pago:</label>
+                <input type="file" id="input-comprobante" name="comprobante" accept="image/*" required>
+                <button type="submit" class="boton-confirmar">Confirmar Compra</button>
+            </form>
+        </div>
+    </div>
+    
+
+
     <script src="/public/Scripts/carrito.js"></script>
+    <script src="/public/Scripts/modalCarrito.js"></script>
 </body>
 </html>
